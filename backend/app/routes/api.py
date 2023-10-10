@@ -25,6 +25,10 @@ def generate_url_safe_sequence():
     return url_safe_sequence
 
 
+# implement url proposal
+# adaptive 
+
+
 
 @api.route('/create-url/', methods=['POST'])
 def createUrl():
