@@ -1,4 +1,3 @@
-import arrow_down from "../../assets/images/arrow-down.png";
 import "./DropDown.css";
 import "../../index.css"
 import { useEffect, useRef, useState } from "react";
@@ -45,7 +44,6 @@ function DropDown(props) {
         <div className={"dropdown" + (props.className ? props.className : "")}>
             <a href="#"  onClick={(e) => {setOpen(!open)}} className="dropdown__link flex flex-ai-c">
                 {props.text}
-                <img ref={arrowRef} src={arrow_down} width="22" alt="arrow"/>
             </a>
             {open && 
                 (

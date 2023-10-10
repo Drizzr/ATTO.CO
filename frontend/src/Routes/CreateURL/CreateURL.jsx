@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import Button from '../../Components/Button/Button';
 import Alert from '../../Components/Alert/Alert';
-import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faTimes, faInfoCircle, faClipboard } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from '../../api/axios';
 import "./index.css"
 import "../../index.css"
+import Header from '../../Components/Header/Header';
+import ReactCardFlip from 'react-card-flip';
+import { Link } from 'react-router-dom';
 
 const url_regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 
@@ -14,6 +17,8 @@ function CreateURL() {
     const [URL, setURL] = useState('')
     const [focus, setFocus] = useState(false)
     const [shortend, setShortend] = useState("")
+
+    const [flip, setFlip] = useState(false);
 
     const [errMsg, setErrMsg] = useState("")
 
@@ -53,54 +58,75 @@ function CreateURL() {
             }
             
         }
+
+        handleFlip();
+    }
+
+    const handleFlip = () => {
+    
+        setFlip(!flip);
     }
     
 
     return (
-        <section className='grid grid-center'>
-            <form className="form" onSubmit={handleSubmit}>
-                <h1>Create a shortend Link!</h1>
+        <>
+        <Header>
+            <h1>
+            Optimize your links seamlessly with ATTO.CO. Streamline your URLs for enhanced sharing and tracking. Begin by entering your URL below. Elevate your online presence effortlessly.
+            </h1>
+            <ReactCardFlip isFlipped={flip} flipDirection="vertical">
+            <section className='form__section'>
                 
-                <div className="form__field">
-                    <label htmlFor="email">
-                        <span>URL</span>
-                        <span className={!error ? "form__success" : "hide"}>
-                            <FontAwesomeIcon icon={faCheck} />
-                        </span>
-                        <span className={error && URL?
-                            "form__error" : "hide"}>
-                            <FontAwesomeIcon icon={faTimes} />
-                        </span>
-                    </label>
-                    <input
-                        className="form__input"
-                        id="email"
-                        value={URL}
-                        autoComplete="off"
-                        onChange={(e) => setURL(e.target.value)}
-                        required
-                        onFocus={() => setFocus(true)}
-                        onBlur={() => setFocus(false)}
-                    ></input>
-                </div>
-                <p id="pwdnote" className={focus && error && URL? "form__instructions" : "offscreen"}>
-                    <span>
-                        <FontAwesomeIcon icon={faInfoCircle} />
-                    </span>
-                    8 to 24 characters.<br />
-                    Must include uppercase and lowercase letters, a number and a special character.<br />
-                    Allowed special characters: <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
-                </p>
-                <Button message="Create!"  disabled={error ? true : false}/>
-            </form>
-            { shortend &&
-                <div>
-                    <h1>Your Custom Link:</h1>
-                    <p onClick={() => {navigator.clipboard.writeText(this.state.textToCopy)}}>http://localhost:5173/{shortend}</p>
-                </div>
-            
-            }
-        </section>
+                    <form className="form" onSubmit={handleSubmit}>
+                        <h1>Create a shortend Link!</h1>
+                        
+                        <div className="form__field">
+                            <label htmlFor="email">
+                                <span>URL</span>
+                                <span className={!error ? "form__success" : "hide"}>
+                                    <FontAwesomeIcon icon={faCheck} />
+                                </span>
+                                <span className={error && URL?
+                                    "form__error" : "hide"}>
+                                    <FontAwesomeIcon icon={faTimes} />
+                                </span>
+                            </label>
+                            <input
+                                className="form__input"
+                                type='url'
+                                id='url'
+                                value={URL}
+                                autoComplete="off"
+                                onChange={(e) => setURL(e.target.value)}
+                                required
+                                onFocus={() => setFocus(true)}
+                                onBlur={() => setFocus(false)}
+                                placeholder='f.e.: https://www.google.com'
+                            ></input>
+                        </div>
+                        <p id="pwdnote" className={focus && error && URL? "form__instructions" : "offscreen"}>
+                            <span>
+                                <FontAwesomeIcon icon={faInfoCircle} />
+                            </span>
+                            Note that the URL must start with http:// or https://
+                        </p>
+                        <Button message="Create!"  disabled={error ? true : false}/>
+                    </form>
+            </section>
+            <div className='form__flip flex flex-col flex-jc-c flex-ai-c'>
+                    <h1>Your Custom Link: 
+                        <div className='flex flex-row flex-jc-sb flex-ai-c'>
+                            <Link to={"http://localhost:5173/"+shortend}>{"http://localhost:5173/"+shortend}</Link>
+                            <Button onClick={()=>{navigator.clipboard.writeText("http://localhost:5173/"+shortend)}}><FontAwesomeIcon icon="fas fa-clipboard" /></Button>
+                        </div>
+
+                    </h1>
+                <Button onClick={handleFlip} message="create another link"/>
+            </div>
+            </ReactCardFlip>
+        </Header>
+        </>
+        
         )
 
 

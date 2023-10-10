@@ -13,6 +13,10 @@
 .navbar {
   height: 60px;
   padding: 0 1rem;
+  position: fixed;
+  background-color: lightslategray;
+  z-index: 10;
+  width: 100vw;
 }
 .navbar__logo {
   padding: 0 2rem;
