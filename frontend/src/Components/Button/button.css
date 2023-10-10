@@ -1,0 +1,16 @@
+.buttons {
+  font-size: 1rem;
+  border-color: black;
+  border-radius: 1rem;
+  background-color: white;
+  color: black;
+  padding: 0.4rem 1.8rem;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  transition: all 200ms ease-in-out;
+}
+.buttons:hover {
+  background-color: black;
+  color: white;
+}

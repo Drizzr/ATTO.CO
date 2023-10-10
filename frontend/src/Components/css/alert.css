@@ -1,0 +1,23 @@
+.alert {
+  padding: 1rem 2rem;
+  margin-bottom: 1rem;
+}
+.alert__success {
+  background-color: green;
+}
+.alert__error {
+  background-color: red;
+}
+
+.closebtn {
+  margin-left: 1rem;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: all ease-in-out 200ms;
+}
+.closebtn:hover {
+  color: black;
+}

@@ -1,0 +1,112 @@
+.dropdown {
+
+    &__link {
+    
+        &:hover {
+            color: white;
+            
+        }
+
+        &:active {
+            > img {
+                transform: rotate(180);
+            }
+        }
+
+        > img {
+            transition: all 0.3s ease-in-out;
+        }
+    }
+
+
+    &__item {
+        height: 50px;
+        display: flex;
+        align-items: center;
+        transition: all 0.3s ease-in-out;
+        padding: 0.5rem;
+        border-radius: 1rem;
+
+        &:hover {
+            background-color: #f5f5f5;
+        }
+
+    
+    }
+
+    &__icon_right {
+        margin-left: auto;
+    }
+
+    &__menu {
+        position: absolute;
+        top: 58px;
+        width: 300px;
+        transform: translateX(-45%);
+        background-color: red;
+        color: white;
+        padding: 1rem;
+        overflow: hidden;
+        border-radius: 1rem;
+        transition: height 0.3s ease;
+
+            
+        &_primary {
+            
+            &-enter {
+                position: absolute;
+                transform: translateX(-110%);
+            
+            }
+
+            &-enter-active {
+                position: static;
+                transform: translateX(0);
+                transition: transform 0.3s ease;
+            }
+
+            &-exit {
+                position: absolute;
+                transform: translateX(0);
+            }
+
+            &-exit-active {
+                position: absolute;
+                transform: translateX(-110%);
+                transition: transform 0.3s ease;
+            }
+        
+        }
+
+        &_secondary {
+            
+            &-enter {
+                position: absolute;
+                transform: translateX(110%);
+            
+            }
+
+            &-enter-active {
+                position: static;
+                transform: translateX(0);
+                transition: transform 0.3s ease;
+            }
+
+            &-exit {
+                position: absolute;
+                transform: translateX(0);
+            }
+
+            &-exit-active {
+                position: absolute;
+                transform: translateX(110%);
+                transition: transform 0.3s ease;
+            }
+        
+        }
+
+        
+    }
+
+
+}

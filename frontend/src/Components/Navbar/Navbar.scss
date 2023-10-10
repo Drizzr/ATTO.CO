@@ -1,0 +1,35 @@
+@use "../../assets/scss/_mixins.scss";
+
+
+.navbar {
+    height: 60px;
+    padding: 0 1rem;
+
+
+    &__logo {
+        padding: 0 2rem;
+        z-index: 5;
+
+        @include mixins.breaktpoint-down(small) {
+            padding: 0 0.5rem;
+        }
+    }
+
+    &__buttons {
+        @include mixins.breaktpoint-down(medium) {
+            display: none;
+        }
+        margin-left: auto;
+
+        >*:last-child {
+            margin-right: 2rem;;
+        }
+    }
+
+    &__dropdown {
+        @include mixins.breaktpoint-down(medium) {
+            display: none;
+        }
+    }
+
+}
