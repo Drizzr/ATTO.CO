@@ -2,6 +2,7 @@ import axios from "../../api/axios";
 import { useEffect, useState } from "react"
 import { redirect, useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import {Oval} from "react-loader-spinner"
 
 function CustomNavigate() {
 
@@ -32,7 +33,7 @@ function CustomNavigate() {
 
 
     return (
-        <>{render &&
+        <>{!render ? <div className="grid grid-center" style={{"height": "100vh"}}><Oval color="white" secondaryColor="grey"/></div> :
     
         <p>
             Ooops this url does not exist!!

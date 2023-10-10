@@ -81,7 +81,7 @@ function CreateURL() {
                         <h1>Create a shortend Link!</h1>
                         
                         <div className="form__field">
-                            <label htmlFor="email">
+                            <label>
                                 <span>URL</span>
                                 <span className={!error ? "form__success" : "hide"}>
                                     <FontAwesomeIcon icon={faCheck} />
@@ -117,7 +117,7 @@ function CreateURL() {
                     <h1>Your Custom Link: 
                         <div className='flex flex-row flex-jc-sb flex-ai-c'>
                             <Link to={"http://localhost:5173/"+shortend}>{"http://localhost:5173/"+shortend}</Link>
-                            <Button onClick={()=>{navigator.clipboard.writeText("http://localhost:5173/"+shortend)}}><FontAwesomeIcon icon="fas fa-clipboard" /></Button>
+                            <Button onClick={()=>{navigator.clipboard.writeText("http://localhost:5173/"+shortend)}}></Button>
                         </div>
 
                     </h1>
@@ -125,6 +125,7 @@ function CreateURL() {
             </div>
             </ReactCardFlip>
         </Header>
+        
         </>
         
         )

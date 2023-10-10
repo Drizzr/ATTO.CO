@@ -29,9 +29,8 @@
 .form__instructions {
   width: 60%;
   color: white;
-  background-color: black;
+  background-color: red;
   margin-bottom: 0.5rem;
-  margin-top: 0.5rem;
   font-size: 0.8rem;
   opacity: 0.65;
   border-radius: 0.5rem;
@@ -44,11 +43,13 @@
   position: absolute;
   color: red;
   font-size: 0.8rem;
+  margin-left: auto;
 }
 .form__success {
   position: absolute;
   color: green;
   font-size: 0.8rem;
+  margin-left: auto;
 }
 .form__field {
   width: 60%;
@@ -62,7 +63,13 @@
   display: block;
   background-color: white;
   border-color: black;
+  border-width: 3px;
   border-radius: 0.5rem;
+  transition: all 0.5s ease-in-out;
+}
+.form__field > input:focus {
+  outline: none;
+  border-color: blue;
 }
 .form__field > label {
   display: block;
