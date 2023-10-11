@@ -1,14 +1,14 @@
 import { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import CreateURL from './Routes/CreateURL/CreateURL'
-import CustomNavigate from './Routes/LinkHandler/CustomNavigate'
+import LinkHandler from './Routes/LinkHandler/LinkHandler'
 
 function App() {
 
   return (
     <Routes path="/">
       <Route path="*" element={<CreateURL />} />
-      <Route path=":shortend" element={<CustomNavigate />} />
+      <Route path=":shortend" element={<LinkHandler />} />
     </Routes>
   )
 }

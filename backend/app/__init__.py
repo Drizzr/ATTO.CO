@@ -19,6 +19,7 @@ def create_app(developing=True):
 
 
     cors.init_app(app)
+    migrate.init_app(app, db)
 
     app.register_error_handler(HTTP_404_NOT_FOUND, pageNotFound)
     app.register_error_handler(HTTP_401_UNAUTHORIZED, unauthorizedUser)

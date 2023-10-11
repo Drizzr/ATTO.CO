@@ -1,12 +1,37 @@
 .alert {
-  padding: 1rem 2rem;
-  margin-bottom: 1rem;
+  width: 80%;
+  margin-bottom: 0.5rem;
+  font-size: 0.8rem;
+  opacity: 0.65;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  color: white;
 }
 .alert__success {
   background-color: green;
 }
 .alert__error {
   background-color: red;
+}
+.alert__animation-enter {
+  position: relative;
+  transform: translateY(-50%);
+}
+.alert__animation-enter-active {
+  position: static;
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+}
+.alert__animation-exit {
+  position: relative;
+}
+.alert__animation-exit-active {
+  transform: translateY(-50%);
+  transition: transform 0.3s ease;
+  display: none;
+}
+.alert__animation-exit-done {
+  display: none;
 }
 
 .closebtn {

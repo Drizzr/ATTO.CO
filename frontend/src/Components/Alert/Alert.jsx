@@ -1,15 +1,17 @@
 import "./alert.css";
-import { useState } from "react";
+import "../../index.css"
+import { CSSTransition } from "react-transition-group";
+
 
 function Alert(props) {
-  
-    const [flag,setFlag]=useState(true);
-
+    
+    
     return (
-    <div  ref={props.ref} class={(flag ? props.error ? "alert alert__error" : "alert alert__success" : "hide") + props.className} onClick={()=>{setFlag(false)}}>
-        <span class="closebtn">&times;</span> 
-          {props.text}
-    </div>
+    <CSSTransition in={props.show} nodeRef={props.ref} unmountOnExit timeout={300} classNames="alert__animation">
+        <div  ref={props.ref} className={"alert " + (props.error ? "alert__error " : "alert__success ") + (props.className ? props.className : "")}>
+            {props.children}
+        </div>
+    </CSSTransition>
     )
 }
 

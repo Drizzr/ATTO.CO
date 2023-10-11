@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { createContext, useEffect, useRef, useState } from 'react';
 import Button from '../../Components/Button/Button';
 import Alert from '../../Components/Alert/Alert';
 import { faCheck, faTimes, faInfoCircle, faClipboard } from "@fortawesome/free-solid-svg-icons";
@@ -6,60 +6,89 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from '../../api/axios';
 import "./index.css"
 import "../../index.css"
+import "../../Components/Alert/alert.css"
 import Header from '../../Components/Header/Header';
 import ReactCardFlip from 'react-card-flip';
 import { Link } from 'react-router-dom';
+
 
 const url_regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 
 
 function CreateURL() {
+
+    // from allert for responses from server
+    const [flag, setFlag] = useState(false);
+    const [alertMsg, setAlertMsg] = useState("teset")
+
+
+    // data from input fields and response from server
     const [URL, setURL] = useState('')
-    const [focus, setFocus] = useState(false)
+    const [wish, setWish] = useState('')
     const [shortend, setShortend] = useState("")
 
+
+    // flipping animation
     const [flip, setFlip] = useState(false);
 
-    const [errMsg, setErrMsg] = useState("")
+    
+    // error box under input field
+    const [urlError, setURLError] = useState(false)
+    const [wishError, setWishError] = useState(false)
 
-    const [error, setError] = useState(false)
+    const shortendRef = useRef(null);
+    const urlRef = useRef(null);
 
     useEffect(() => {
     
         if (URL.match(url_regex)) {
-            setError(false)
+            setURLError(false)
         } else {
-            setError(true)
+            setURLError(true)
         }
     }, [URL])
+
+    useEffect(() => {
+    
+        if (wish.length <= 10) {
+            setWishError(false);
+        } else {
+        
+            setWishError(true);
+        }
+    
+    }, [wish])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const v1 = url_regex.test(URL);
 
         if (!v1) {
-            setErrMsg("Invalid URL");
+            setAlertMsg("Invalid URL");
             return;
         }
 
         try {
-            const response = await axios.post("/create-url/", { url: URL });
+            const response = await axios.post("/create-url/", { url: URL , urlWish: wish});
 
             setShortend(response?.data?.short_url);
-        
+            
+            handleFlip();
+
         } catch (err) {
+            console.log(err.response)
             if (!err?.response) {
-                setErrMsg("No connection to the server. Please try again later.");
+                setFlag(true);
+                setAlertMsg("No connection to the server. Please try again later.");
                 
             } else if (err?.response?.status === 406) {
-                setErrMsg("A shortend link for this URL already exists.");
-                setShortend(err?.response?.data.short_url);
-                
+                setFlag(true);
+                setAlertMsg("Your url-wish is already in use. Please choose another one.");     
+                shortendRef.current.value = "";    
+                setWish("");
             }
             
         }
-
-        handleFlip();
     }
 
     const handleFlip = () => {
@@ -79,14 +108,18 @@ function CreateURL() {
                 
                     <form className="form" onSubmit={handleSubmit}>
                         <h1>Create a shortend Link!</h1>
+                        <Alert error={true} show={flag}>
+                            {alertMsg}
+                            <span class="closebtn" onClick={()=>{setFlag(false)}}>&times;</span> 
+                        </Alert>
                         
                         <div className="form__field">
                             <label>
                                 <span>URL</span>
-                                <span className={!error ? "form__success" : "hide"}>
+                                <span className={!urlError ? "form__success" : "hide"}>
                                     <FontAwesomeIcon icon={faCheck} />
                                 </span>
-                                <span className={error && URL?
+                                <span className={urlError && URL?
                                     "form__error" : "hide"}>
                                     <FontAwesomeIcon icon={faTimes} />
                                 </span>
@@ -95,6 +128,7 @@ function CreateURL() {
                                 className="form__input"
                                 type='url'
                                 id='url'
+                                ref={urlRef}
                                 value={URL}
                                 autoComplete="off"
                                 onChange={(e) => setURL(e.target.value)}
@@ -104,13 +138,37 @@ function CreateURL() {
                                 placeholder='f.e.: https://www.google.com'
                             ></input>
                         </div>
-                        <p id="pwdnote" className={focus && error && URL? "form__instructions" : "offscreen"}>
+                        <Alert show={Boolean(urlError && URL)} error={true} className="form__instructions">
                             <span>
                                 <FontAwesomeIcon icon={faInfoCircle} />
                             </span>
                             Note that the URL must start with http:// or https://
-                        </p>
-                        <Button message="Create!"  disabled={error ? true : false}/>
+                        </Alert>
+                        <div className="form__field">
+                            <label>
+                                <span>Your dream URL!</span>
+                            </label>
+                            <div className='flex flex-ai-c'>
+                                <h1 className='margin-right'>atto.co<span className='margin-left'>/</span></h1>
+                                <input
+                                    className="form__input"
+                                    type='text'
+                                    id='shortend'
+                                    ref={shortendRef}
+                                    autoComplete='off'
+                                    placeholder='iLoveYou'
+                                    onChange={(e) => setWish(e.target.value)}
+                                ></input>
+                            </div>
+                        </div>
+                        <Alert show={Boolean(wishError && wish)} className={"form__instructions"} error={true}>
+                            <span>
+                                <FontAwesomeIcon icon={faInfoCircle} />
+                            </span>
+                            Your custom must not be longer than 10 characters.
+                            Note that this field is not required.
+                        </Alert>
+                        <Button message="Create!"  disabled={urlError&&wishError ? true : false}/>
                     </form>
             </section>
             <div className='form__flip flex flex-col flex-jc-c flex-ai-c'>
@@ -121,7 +179,8 @@ function CreateURL() {
                         </div>
 
                     </h1>
-                <Button onClick={handleFlip} message="create another link"/>
+                <Button onClick={()=>{handleFlip(); urlRef.current.value="", setURL(""), shortendRef.current.value="", setWish("")}} message="create another link"/>
+
             </div>
             </ReactCardFlip>
         </Header>

@@ -34,11 +34,25 @@ def generate_url_safe_sequence():
 def createUrl():
 
     url = request.json['url']
+    wish = request.json['urlWish']
 
-    url_query = ShortenedURL.query.filter_by(original_url=url).first()
-    if not url_query:
+    if wish and len(wish) <= 10:
+        try:
+            url_query = ShortenedURL.query.filter_by(short_url=wish).first()
+            if url_query is None:
+                new_url = ShortenedURL(original_url=url, short_url=wish)
+                db.session.add(new_url)
+                db.session.commit()
+                return jsonify({"message": "Success, url created!", "short_url": wish}), HTTP_201_CREATED
+            raise Exception("URL-wish not available")
+        except Exception as e:
+            return jsonify({"message": "URL-wish not available"}), HTTP_406_NOT_ACCEPTABLE
+
+    elif len(wish) > 10:
+        return jsonify({"message": "URL-wish too long"}), HTTP_406_NOT_ACCEPTABLE
+    
+    else:
         
-
         # Generate a 4-character sequence randomly
         shortend_url = generate_url_safe_sequence()
 
@@ -49,14 +63,20 @@ def createUrl():
 
         return jsonify({"message": "Success, url created!", "short_url": shortend_url}), HTTP_201_CREATED
 
-    return jsonify({"message": "Url already has a shortened version", "short_url": url_query.short_url}), HTTP_406_NOT_ACCEPTABLE
-
-
 
 @api.route('/<short_url>')
-def redirect_to_url(short_url):
+def get_url(short_url):
     url = ShortenedURL.query.filter_by(short_url=short_url).first()
     if url is None:
         return jsonify({"error": "url not found"}), HTTP_404_NOT_FOUND
     return jsonify({"message": "Success", "url": url.original_url}), HTTP_200_OK
+
+
+
+@api.route('/available/<short_url>')
+def check_available(short_url):
+    url = ShortenedURL.query.filter_by(short_url=short_url).first()
+    if url is None:
+        return jsonify({"message": "Success", "available": True}), HTTP_200_OK
+    return jsonify({"message": "Success", "available": False}), HTTP_200_OK
     
