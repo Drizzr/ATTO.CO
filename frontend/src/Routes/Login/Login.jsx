@@ -4,8 +4,10 @@ import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios";
 import Alert from "../../Components/Alert/Alert";
 import Button from "../../Components/Button/Button";
-import "./index.css";
-import "../../index.css"
+import "../../index.css";
+import "./Login.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 
 const login_url = "/auth/login"
 
@@ -26,6 +28,7 @@ function Login() {
     const [pwd, setPwd] = useState("");
 
     const [errMsg, setErrMsg] = useState("");
+    const [flag, setFlag] = useState(false);
 
     useEffect(() => {userRef.current.focus()}, []); // for aria-live support
 
@@ -63,6 +66,7 @@ function Login() {
             if (!err?.response) {
                 setErrMsg("No connection to the server. Please try again later.");
                 
+                
             } else if (err?.response?.status === 401) {
                 setErrMsg("Invalid email or password");
             } else if (err?.response?.status === 500) {
@@ -75,6 +79,7 @@ function Login() {
                 setErrMsg("Unknown error. Please try again later.");
             }
             //errRef.current.focus();
+            setFlag(true);
             return;
             
         }        
@@ -84,10 +89,16 @@ function Login() {
     return (
         <>
             <section>
-                <Alert ref={errRef}  className={errMsg ? "": " offscreen"} error={true} text={errMsg} />
-                <form className="form" onSubmit={handleSubmit}>
+                <form className="authForm" onSubmit={handleSubmit}>
                 <h1>Login</h1>
-                    <div className="form__field">
+                <Alert error={true} show={flag} reference={errRef}>
+                    <div className='flex flex-ai-c flex-jc-sb'>
+                        <span> <FontAwesomeIcon icon={faExclamationCircle}/> </span>
+                        {errMsg}
+                        <span class="closebtn" onClick={()=>{setFlag(false)}}>&times;</span> 
+                    </div>
+                </Alert>
+                    <div className="authForm__field">
                         <label htmlFor="email">
                             <span>Email</span>
                         </label>
@@ -100,7 +111,7 @@ function Login() {
                         required
                         ></input>
                     </div>
-                    <div className="form__field">
+                    <div className="authForm__field">
                             <label htmlFor="password">Password:</label>
                             <input
                                 type="password"

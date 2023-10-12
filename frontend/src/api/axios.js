@@ -7,3 +7,13 @@ export default axios.create({
         'Content-type': 'application/json'
     },
 });
+
+
+export const axiosWithAuth = axios.create({
+    baseURL: 'http://127.0.0.1:5000/api',
+
+    headers: {
+        'Content-type': 'application/json',
+        withCredentials: true
+    },
+});

@@ -12,7 +12,7 @@ from app.models import User, Device, Role, ExpiredToken
 auth = Blueprint('auth', __name__)
 
 @auth.route("/refresh", methods=["GET"])
-@cross_origin(supports_credentials=True, headers=["Content-Type", "Authorization"], origins="http://127.0.0.1:3000", with_credentials=True, expose_headers=["Content-Type", "Authorization", "Set-Cookie"], allow_headers=["Content-Type", "Authorization", "Set-Cookie"], allow_credentials=True)
+@cross_origin(supports_credentials=True, headers=["Content-Type", "Authorization"], origins=["http://127.0.0.1:5173", "http://localhost:5173"], with_credentials=True, expose_headers=["Content-Type", "Authorization", "Set-Cookie"], allow_headers=["Content-Type", "Authorization", "Set-Cookie"], allow_credentials=True)
 def refresh():
     refreshToken = request.cookies.get("x_refresh_token")
     refreshTokenExpirationTime = None
@@ -49,7 +49,7 @@ def refresh():
 
 
 @auth.route("/login", methods=["POST"])
-@cross_origin(supports_credentials=True, headers=["Content-Type", "Authorization"], origins="http://127.0.0.1:3000", with_credentials=True, expose_headers=["Content-Type", "Authorization", "Set-Cookie"], allow_headers=["Content-Type", "Authorization", "Set-Cookie"], allow_credentials=True)
+@cross_origin(supports_credentials=True, headers=["Content-Type", "Authorization"], origins=["http://127.0.0.1:5173", "http://localhost:5173"], with_credentials=True, expose_headers=["Content-Type", "Authorization", "Set-Cookie"], allow_headers=["Content-Type", "Authorization", "Set-Cookie"], allow_credentials=True)
 def login():
     """
     This function implements login via api class f.E. for mobile devices using a future app.
@@ -80,7 +80,7 @@ def login():
     
 
 @auth.route("/sign-up", methods=["POST"])
-@cross_origin(supports_credentials=True, with_credentials=True)
+@cross_origin(supports_credentials=True, headers=["Content-Type", "Authorization"], origins=["http://127.0.0.1:5173", "http://localhost:5173"], with_credentials=True, expose_headers=["Content-Type", "Authorization", "Set-Cookie"], allow_headers=["Content-Type", "Authorization", "Set-Cookie"], allow_credentials=True)
 def signUp():
     """
     This function implements sign-up via api class f.E. for mobile devices using a future app.

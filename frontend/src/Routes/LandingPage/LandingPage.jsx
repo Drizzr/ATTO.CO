@@ -6,8 +6,8 @@ function LandingPage() {
     <div>
         <Header>
             <h1>Landing</h1>
+            <CreateUrlForm />
         </Header>
-        <CreateUrlForm />
     </div>
   );
 }
