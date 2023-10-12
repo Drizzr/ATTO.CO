@@ -1,13 +1,12 @@
 import { createContext, useEffect, useRef, useState } from 'react';
-import Button from '../../Components/Button/Button';
-import Alert from '../../Components/Alert/Alert';
-import { faCheck, faTimes, faInfoCircle, faClipboard, faExclamationCircle, faClipboardList  } from "@fortawesome/free-solid-svg-icons";
+import Button from '../Button/Button';
+import Alert from '../Alert/Alert';
+import { faExclamationCircle, faClipboardList  } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from '../../api/axios';
 import "./index.css"
 import "../../index.css"
 import "../../Components/Alert/alert.css"
-import Header from '../../Components/Header/Header';
 import ReactCardFlip from 'react-card-flip';
 import { Link } from 'react-router-dom';
 
@@ -15,7 +14,7 @@ import { Link } from 'react-router-dom';
 const url_regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 
 
-function CreateURL() {
+function CreateUrlForm() {
 
     const errRef1 = useRef(null);
     const errRef2 = useRef(null);
@@ -92,10 +91,6 @@ function CreateURL() {
 
     return (
         <>
-        <Header>
-            <h1>
-            Optimize your links seamlessly with ATTO.CO. Streamline your URLs for enhanced sharing and tracking. Begin by entering your URL below. Elevate your online presence effortlessly.
-            </h1>
             <ReactCardFlip isFlipped={flip} flipDirection="vertical">
             <section className='form__section'>
                 
@@ -171,7 +166,7 @@ function CreateURL() {
 
             </div>
             </ReactCardFlip>
-        </Header>
+
         
         </>
         
@@ -181,4 +176,4 @@ function CreateURL() {
 }
 
 
-export default CreateURL;
+export default CreateUrlForm;

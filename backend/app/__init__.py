@@ -17,6 +17,8 @@ def create_app(developing=True):
     from app.routes.api import api
     app.register_blueprint(api, url_prefix="/api")
 
+    from app.routes.auth import auth
+    app.register_blueprint(auth, url_prefix="/api/auth")
 
     cors.init_app(app)
     migrate.init_app(app, db)

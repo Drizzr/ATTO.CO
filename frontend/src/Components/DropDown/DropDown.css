@@ -1,3 +1,15 @@
+.dropdown {
+  position: absolute;
+  top: 58px;
+  width: 300px;
+  transform: translateX(-45%);
+  background-color: red;
+  color: white;
+  padding: 1rem;
+  overflow: hidden;
+  border-radius: 1rem;
+  transition: height 0.3s ease;
+}
 .dropdown__link:hover {
   color: white;
 }
@@ -22,50 +34,31 @@
   margin-left: auto;
 }
 .dropdown__menu {
-  position: absolute;
-  top: 58px;
-  width: 300px;
-  transform: translateX(-45%);
-  background-color: red;
-  color: white;
-  padding: 1rem;
-  overflow: hidden;
-  border-radius: 1rem;
-  transition: height 0.3s ease;
+  width: 100%;
 }
 .dropdown__menu_primary-enter {
   position: absolute;
   transform: translateX(-110%);
 }
 .dropdown__menu_primary-enter-active {
-  position: static;
   transform: translateX(0);
   transition: transform 0.3s ease;
 }
 .dropdown__menu_primary-exit {
   position: absolute;
-  transform: translateX(0);
 }
-.dropdown__menu_primary-exit-active {
-  position: absolute;
+s .dropdown__menu_primary-exit-active {
   transform: translateX(-110%);
   transition: transform 0.3s ease;
 }
 .dropdown__menu_secondary-enter {
-  position: absolute;
   transform: translateX(110%);
 }
 .dropdown__menu_secondary-enter-active {
-  position: static;
   transform: translateX(0);
   transition: transform 0.3s ease;
 }
-.dropdown__menu_secondary-exit {
-  position: absolute;
-  transform: translateX(0);
-}
 .dropdown__menu_secondary-exit-active {
-  position: absolute;
   transform: translateX(110%);
   transition: transform 0.3s ease;
 }

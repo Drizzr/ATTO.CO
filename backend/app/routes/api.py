@@ -1,9 +1,10 @@
 from flask import Blueprint, request, jsonify, redirect
-from app.utils.errorHandlers import HTTP_406_NOT_ACCEPTABLE, HTTP_201_CREATED, HTTP_404_NOT_FOUND, HTTP_200_OK
+from app.utils.errorHandlers import HTTP_406_NOT_ACCEPTABLE, HTTP_201_CREATED,HTTP_403_FORBIDDEN, HTTP_404_NOT_FOUND, HTTP_200_OK
 import string
 import random
 from app.models import ShortenedURL
 from app.extensions import db
+from app.security.decorators import access_token_required
 
 api = Blueprint('api', __name__)
 
@@ -31,7 +32,8 @@ def generate_url_safe_sequence():
 
 
 @api.route('/create-url/', methods=['POST'])
-def createUrl():
+@access_token_required()
+def createUrl(current_user):
 
     url = request.json['url']
     wish = request.json['urlWish']
@@ -67,8 +69,10 @@ def createUrl():
 @api.route('/<short_url>')
 def get_url(short_url):
     url = ShortenedURL.query.filter_by(short_url=short_url).first()
-    if url is None:
+    if not url:
         return jsonify({"error": "url not found"}), HTTP_404_NOT_FOUND
+    elif url.secured:
+        return jsonify({"error": "url is secured"}), HTTP_403_FORBIDDEN
     return jsonify({"message": "Success", "url": url.original_url}), HTTP_200_OK
 
 
@@ -80,3 +84,5 @@ def check_available(short_url):
         return jsonify({"message": "Success", "available": True}), HTTP_200_OK
     return jsonify({"message": "Success", "available": False}), HTTP_200_OK
     
+
+

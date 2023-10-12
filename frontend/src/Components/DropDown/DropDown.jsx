@@ -7,28 +7,20 @@ import { CSSTransition } from "react-transition-group";
 
 function DropDown(props) {
 
-    const [open, setOpen] = useState(false);
     const [activeMenu, setActiveMenu] = useState("main")
     const [menuHeight, setMenuHeight] = useState(null);
     
-    const arrowRef = useRef(null);
 
     const dropdownRef = useRef(null);
+    useEffect(() => {
+        setMenuHeight(dropdownRef.current?.firstChild.offsetHeight)
+    }, [])
 
     function calcHeight(el) {
         const height = el.offsetHeight;
         setMenuHeight(height);
     }
 
-    useEffect(() => {
-        arrowRef.current.style.transform = open ? "rotate(180deg)" : "rotate(0deg)";
-        setActiveMenu("main");
-    
-    }, [open])
-
-    useEffect(() => {
-        setMenuHeight(dropdownRef.current?.firstChild.offsetHeight)
-      }, [])
 
     function DropDownItem(props) {
         return (
@@ -41,40 +33,39 @@ function DropDown(props) {
     }
 
     return (
-        <div className={"dropdown" + (props.className ? props.className : "")}>
-            <a href="#"  onClick={(e) => {setOpen(!open)}} className="dropdown__link flex flex-ai-c">
-                {props.text}
-            </a>
-            {open && 
-                (
-                    <div className="dropdown__menu" style={{height: menuHeight}} ref={dropdownRef}>
+        <>
+    
+            <div ref={dropdownRef} className={"dropdown" + (props.className ? props.className : "")} style={{height: menuHeight}}>
 
-                        { props.dropdowns && 
-                            props.dropdowns.map((dropdown, index) => {
-                                <CSSTransition in={activeMenu===dropdown.name} unmountOnExit timeout={1000} classNames="dropdown__menu_secondary" onEnter={calcHeight}>
-                                    <div>
-                                        <DropDownItem leftIcon="👈" text="Back" goToMenu="main" />
-                                        { dropdown.items && dropdown.items.map((item, index) => {
-                                        
-                                            <DropDownItem leftIcon={item.leftIcon} text={item.text} rightIcon={item.rightIcon} />
-                                        
-                                        })}
-                                    </div>
-                                </CSSTransition>
+                { props.dropdowns && 
+                    props.dropdowns.map((dropdown, index) => {
+                        return (<CSSTransition in={activeMenu===dropdown.name} unmountOnExit timeout={300} classNames="dropdown__menu_secondary" onEnter={calcHeight}>
+                            <div>
+                                <DropDownItem leftIcon="👈" text="Back" goToMenu="main" />
+                                { dropdown.items && dropdown.items.map((item, index) => {
+                                
+                                    return (<DropDownItem leftIcon={item.leftIcon} text={item.text} rightIcon={item.rightIcon} />);
+                                
+                                })}
+                            </div>
+                        </CSSTransition>);
+                    })
+                }
+                <CSSTransition in={activeMenu==="main"} unmountOnExit timeout={300} classNames="dropdown__menu_primary" onEnter={calcHeight}>
+                    <div>
+                        {
+                            props.main.map((item, index) => {
+                                console.log(item);
+                                return (<DropDownItem leftIcon={item.leftIcon} text={item.text} rightIcon={item.rightIcon} goToMenu={item.goToMenu} />);
                             })
                         }
-                        <CSSTransition in={activeMenu==="main"} unmountOnExit timeout={1000} classNames="dropdown__menu_primary" onEnter={calcHeight}>
-                            <div>
-                                {props.children}
-                            </div>
-                            
-                        </CSSTransition>
                     </div>
+                </CSSTransition>
+            </div>
 
-                )
-            
-            }
-        </div>
+                
+        </>
+        
     )
 }
 
