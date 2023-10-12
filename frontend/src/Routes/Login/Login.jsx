@@ -88,16 +88,19 @@ function Login() {
 
     return (
         <>
-            <section>
-                <form className="authForm" onSubmit={handleSubmit}>
-                <h1>Login</h1>
-                <Alert error={true} show={flag} reference={errRef}>
+        <div className="flex flex-jc-c">
+            <Alert className="authForm__alert" error={true} show={flag} reference={errRef}>
                     <div className='flex flex-ai-c flex-jc-sb'>
                         <span> <FontAwesomeIcon icon={faExclamationCircle}/> </span>
                         {errMsg}
                         <span class="closebtn" onClick={()=>{setFlag(false)}}>&times;</span> 
                     </div>
-                </Alert>
+            </Alert>
+        </div>
+        <div className="grid grid-center" style={{"height": "100vh"}}>
+        <section>
+                <form className="authForm" onSubmit={handleSubmit}>
+                <h1>Login</h1>
                     <div className="authForm__field">
                         <label htmlFor="email">
                             <span>Email</span>
@@ -129,6 +132,8 @@ function Login() {
                 </form>
                 
             </section>
+        </div>
+        
 
         </>
     )

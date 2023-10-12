@@ -1,5 +1,5 @@
 .authForm {
-  width: 50%;
+  width: 100%;
   min-width: 400px;
   background-color: rgb(250, 250, 250);
   display: flex;
@@ -14,8 +14,17 @@
 .authForm > form {
   padding-bottom: 1rem;
 }
-.authForm__image {
-  height: 80%;
+.authForm__alert {
+  position: absolute;
+
+}
+.authForm__section {
+  width: 30%;
+}
+.authForm__image_container {
+  border: 1px solid black;
+  height: 100%;
+  width: 30%;
 }
 .authForm__field {
   width: 60%;
@@ -37,6 +46,10 @@
 }
 .authForm__field > label:ul:not(:first-child) {
   float: right;
+}
+.authForm__container {
+  width: 100vw;
+  height: 100vh;
 }
 
 .back_button {

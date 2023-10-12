@@ -35,7 +35,7 @@ function DropDown(props) {
     return (
         <>
     
-            <div ref={dropdownRef} className={"dropdown" + (props.className ? props.className : "")} style={{height: menuHeight}}>
+            <div ref={dropdownRef} className={"dropdown"} style={{height: menuHeight}}>
 
                 { props.dropdowns && 
                     props.dropdowns.map((dropdown, index) => {

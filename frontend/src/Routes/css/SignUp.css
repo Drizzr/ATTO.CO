@@ -14,6 +14,9 @@
 .authForm > form {
   padding-bottom: 1rem;
 }
+.authForm__alert {
+  position: absolute;
+}
 .authForm__section {
   width: 30%;
 }

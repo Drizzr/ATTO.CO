@@ -15,7 +15,12 @@
         padding-bottom: 1rem;
 
     }
+    
 
+    &__alert {
+        position: absolute;
+
+    }
 
     &__section {
     
@@ -65,6 +70,8 @@
     
         width: 100vw;
         height: 100vh;
+
+        
     }
 
 }

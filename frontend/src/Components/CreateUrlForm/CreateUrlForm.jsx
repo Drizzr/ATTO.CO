@@ -96,15 +96,16 @@ function CreateUrlForm() {
                 
                     <form className="form" onSubmit={handleSubmit}>
                         <h1>Create a shortend Link!</h1>
-                        <Alert error={true} show={flag1} reference={errRef1}>
+                        
+                        <Alert error={true} show={flag1} reference={errRef1} className="form__instructions">
                             <div className='flex flex-ai-c flex-jc-sb'>
                                 <span> <FontAwesomeIcon icon={faExclamationCircle}/> </span>
                                 {alertMsg1}
-                                <span class="closebtn" onClick={()=>{setFlag(false)}}>&times;</span> 
+                                <span class="closebtn" onClick={()=>{setFlag1(false)}}>&times;</span> 
                             </div>
                         </Alert>
-                        
                         <div className="form__field">
+
                             <label>
                                 <span>URL</span>
                             </label>

@@ -2,7 +2,7 @@ import { useEffect, useState, useRef, useContext } from "react";
 import AuthContext from "../../context/AuthProvider";
 import { Link } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";
-import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faTimes, faInfoCircle, faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "../../api/axios";
 import Alert from "../../Components/Alert/Alert";
@@ -43,6 +43,7 @@ function SignUp() {
     const [matchFocus, setMatchFocus] = useState(false);
 
     const [errMsg, setErrMsg] = useState("");
+    const [flag, setFlag] = useState(false);
 
 
     useEffect(() => {userRef.current.focus()}, []);
@@ -107,7 +108,8 @@ function SignUp() {
             } else {
                 setErrMsg("Unknown error. Please try again later.");
             }
-            //errRef.current.focus();
+            
+            setFlag(true);
             return;
             
         }
@@ -118,12 +120,26 @@ function SignUp() {
 
     return (
         <>
+        <div className="flex flex-jc-c">
+            <Alert className="authForm__alert" error={true} show={flag} reference={errRef}>
+                    <div className='flex flex-ai-c flex-jc-sb'>
+                        <span> <FontAwesomeIcon icon={faExclamationCircle}/> </span>
+                        {errMsg}
+                        <span class="closebtn" onClick={()=>{setFlag(false)}}>&times;</span> 
+                    </div>
+            </Alert>
+        </div>
         <div className="authForm__container grid grid-center">
-            <div className="flex flex-jc-c flex-ai-c" style={{"width": "100%"}}>
             <section className="authForm__section">
-                <Alert reference={errRef}  className={errMsg ? "": " offscreen"} error={true} text={errMsg} />
                 <form className="authForm" onSubmit={handleSubmit}>
                 <h1>Sign Up</h1>
+                <Alert error={true} show={flag} reference={errRef}>
+                    <div className='flex flex-ai-c flex-jc-sb'>
+                        <span> <FontAwesomeIcon icon={faExclamationCircle}/> </span>
+                        {errMsg}
+                        <span class="closebtn" onClick={()=>{setFlag(false)}}>&times;</span> 
+                    </div>
+                </Alert>
                     <div className="authForm__field">
                         <label htmlFor="email">
                             <span>Email</span>
@@ -150,15 +166,7 @@ function SignUp() {
                         onBlur={() => setUserFocus(false)}
                         ></input>
                     </div>
-                    <p id="uidnote" className={userFocus && email && !validEmail ? "form__instructions" : "offscreen"}>
-                            <span>
-                                <FontAwesomeIcon icon={faInfoCircle} />
-                            </span>
-                        
-                            4 to 24 characters <br />
-                            Must begin with a letter <br />
-                            Letters, numbers, underscores, and hyphens only 
-                        </p>
+                
                     <div className="authForm__field">
                         <label htmlFor="password">
                             Password:
@@ -177,14 +185,7 @@ function SignUp() {
                             onBlur={() => setPwdFocus(false)}
                             />
                     </div>
-                    <p id="pwdnote" className={pwdFocus && !validMatch ? "authForm__instructions" : "offscreen"}>
-                        <span>
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                        </span>
-                        8 to 24 characters.<br />
-                        Must include uppercase and lowercase letters, a number and a special character.<br />
-                        Allowed special characters: <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
-                    </p>
+
                     <div className="authForm__field">
                         <label htmlFor="confirm_pwd">
                             Confirm Password:
@@ -203,12 +204,7 @@ function SignUp() {
                             onBlur={() => setMatchFocus(false)}
                             />
                     </div>
-                    <p id="confirmnote" className={matchFocus && !validMatch ? "authForm__instructions" : "offscreen"}>
-                        <span>
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                        </span>
-                        Must match the first password input field.
-                    </p>
+
                     <Button className="margin-top margin-bottom" message="Sign Up"  disabled={!validEmail || !validPwd || !validMatch ? true : false}/>
 
                     <p className="margin-bottom">
@@ -220,10 +216,7 @@ function SignUp() {
                 
                 
             </section>
-                <div className="authForm__image_container grid grid-center">
-                    <img className="form__image" src={logo}  width="200" alt="ATTO.CO" />
-                </div>
-            </div>
+                
         </div>
         
         </>

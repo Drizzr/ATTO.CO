@@ -14,12 +14,15 @@
 .authForm > form {
   padding-bottom: 1rem;
 }
+.authForm__alert {
+  position: absolute;
+}
 .authForm__section {
   width: 30%;
 }
 .authForm__image_container {
   border: 1px solid black;
-  height: 100% !important;
+  height: 100%;
   width: 30%;
 }
 .authForm__field {
@@ -46,6 +49,7 @@
 .authForm__container {
   width: 100vw;
   height: 100vh;
+  background-image: -webkit-image-set(url(https://images.unsplash.com/photo-1517245386807-9b4d0dd9c9e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80) 1x, url(https://images.unsplash.com/photo-1517245386807-9b4d0dd9c9e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80&dpr=2) 2x);
 }
 
 .back_button {
