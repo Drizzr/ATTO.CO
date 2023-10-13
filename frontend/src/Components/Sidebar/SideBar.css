@@ -4,6 +4,7 @@
   width: 40%;
   transition: width 0.3s ease;
   position: fixed;
+  overflow: hidden;
 }
 .sidebar_collapsed-enter {
   width: 40%;

@@ -18,6 +18,7 @@ function SideBar() {
             
             <div className={"sidebar " + (collapsed ? "sidebar_collapsed-exit" : "sidebar_collapsed-enter")} ref={sidebarRef}>
                 <div className={"sidebar__header " + (collapsed ? "grid grid-center" : "flex flex-ai-c flex-jc-sb")}>
+                    {!collapsed && <h1>Hallo</h1>}
                     {collapsed ? <FontAwesomeIcon icon={faBars} onClick={() => setCollapsed(!collapsed)} /> : <FontAwesomeIcon icon={faX} onClick={() => setCollapsed(!collapsed)} />}
                 </div>
                 
