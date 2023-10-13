@@ -16,28 +16,30 @@
 }
 .authForm__alert {
   position: absolute;
-
 }
-.authForm__section {
-  width: 30%;
+.authForm__error {
+  color: red;
+  font-size: 0.8rem;
+}
+.authForm__success {
+  color: green;
+  font-size: 0.8rem;
 }
 .authForm__image_container {
   border: 1px solid black;
   height: 100%;
   width: 30%;
 }
+.authForm__instructions {
+  width: 60%;
+}
+.authForm__instructions > span {
+  padding-right: 0.2rem;
+}
 .authForm__field {
   width: 60%;
   margin-top: 0.5rem;
-}
-.authForm__field > input {
-  width: 100%;
-  height: 2rem;
-  font-size: 0.8rem;
-  display: block;
-  background-color: white;
-  border-color: black;
-  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 .authForm__field > label {
   display: block;
@@ -46,6 +48,22 @@
 }
 .authForm__field > label:ul:not(:first-child) {
   float: right;
+}
+.authForm__input {
+  width: 100%;
+  height: 2rem;
+  font-size: 0.8rem;
+  display: block;
+  background-color: white;
+  border-color: black;
+  border-radius: 0.5rem;
+}
+.authForm__input:focus {
+  outline: none;
+  border-color: blue;
+}
+.authForm__input_error {
+  border-color: red;
 }
 .authForm__container {
   width: 100vw;

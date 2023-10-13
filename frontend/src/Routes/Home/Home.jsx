@@ -1,8 +1,11 @@
+import Header from '../../components/Header/Header';
+import SideBar from '../../Components/Sidebar/SideBar';
+
+
 function Home() {
   return (
-    <div>
-      <h1>Home</h1>
-    </div>
+      <SideBar />
+
   );
 }
 

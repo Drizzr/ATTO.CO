@@ -28,19 +28,44 @@ function Login() {
     const [pwd, setPwd] = useState("");
 
     const [errMsg, setErrMsg] = useState("");
-    const [flag, setFlag] = useState(false);
+    const [flag1, setFlag1] = useState(false);
+
+    const [flag2, setFlag2] = useState(false);
+    const [flag3, setFlag3] = useState(false);
 
     useEffect(() => {userRef.current.focus()}, []); // for aria-live support
 
 
     useEffect(() => {
-        setErrMsg("");
+        setFlag2(false);
 
-    }, [pwd, email]);
+    }, [email]);
+
+
+    useEffect(() => {
+        setFlag3(false);
+
+    }, [pwd]);
 
 
     const handleSubmit =  async (e) => {
         e.preventDefault();
+
+        if (email === "") {
+        
+            setErrMsg("Please enter your email");
+            setFlag1(true);
+            setFlag2(true);
+            return;
+        }
+
+        if (pwd === "") {
+        
+            setErrMsg("Please enter your password");
+            setFlag1(true);
+            setFlag3(true);
+            return;
+        }
         
         try {
             const response = await axios.post(login_url,
@@ -79,7 +104,7 @@ function Login() {
                 setErrMsg("Unknown error. Please try again later.");
             }
             //errRef.current.focus();
-            setFlag(true);
+            setFlag1(true);
             return;
             
         }        
@@ -89,11 +114,11 @@ function Login() {
     return (
         <>
         <div className="flex flex-jc-c">
-            <Alert className="authForm__alert" error={true} show={flag} reference={errRef}>
+            <Alert className="authForm__alert" error={true} show={flag1} reference={errRef}>
                     <div className='flex flex-ai-c flex-jc-sb'>
                         <span> <FontAwesomeIcon icon={faExclamationCircle}/> </span>
                         {errMsg}
-                        <span class="closebtn" onClick={()=>{setFlag(false)}}>&times;</span> 
+                        <span className="closebtn" onClick={()=>{setFlag1(false)}}>&times;</span> 
                     </div>
             </Alert>
         </div>
@@ -106,22 +131,22 @@ function Login() {
                             <span>Email</span>
                         </label>
                         <input
+                        className={"authForm__input " + (flag2 ? "authForm__input_error" : "")}
                         type="email"
                         id="email"
                         ref={userRef}
                         autoComplete="off"
                         onChange={(e) => setEmail(e.target.value)}
-                        required
                         ></input>
                     </div>
                     <div className="authForm__field">
                             <label htmlFor="password">Password:</label>
                             <input
+                                className={"authForm__input " + (flag3 ? "authForm__input_error" : "")}
                                 type="password"
                                 id="password"
                                 onChange={(e) => setPwd(e.target.value)}
                                 value={pwd}
-                                required
                             />
                     </div>
                     <Button className="margin-top margin-bottom" message="Login"/>

@@ -1,0 +1,17 @@
+.sidebar {
+  height: 100vh;
+  background-color: white;
+  width: 40%;
+  transition: width 0.3s ease;
+  position: fixed;
+}
+.sidebar_collapsed-enter {
+  width: 40%;
+}
+.sidebar_collapsed-exit {
+  width: 10%;
+}
+.sidebar__header {
+  padding: 0.5rem;
+  height: 20%;
+}
