@@ -24,13 +24,11 @@
 }
 .alert__animation-exit {
   position: relative;
+  display: none;
 }
 .alert__animation-exit-active {
   transform: translateY(-50%);
   transition: transform 0.3s ease;
-  display: none;
-}
-.alert__animation-exit-done {
   display: none;
 }
 

@@ -7,7 +7,7 @@
   overflow: hidden;
 }
 .sidebar_collapsed-enter {
-  width: 40%;
+  width: 20%;
 }
 .sidebar_collapsed-exit {
   width: 10%;
@@ -15,4 +15,15 @@
 .sidebar__header {
   padding: 0.5rem;
   height: 20%;
+}
+.sidebar__alert {
+  width: 100%;
+}
+.sidebar__alert_container_enter {
+  transition: width 0.3s ease;
+  width: 60%;
+}
+.sidebar__alert_container_exit {
+  transition: width 0.3s ease;
+  width: 80%;
 }

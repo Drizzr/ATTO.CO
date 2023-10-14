@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify, redirect, current_app, abort, g, make_response
 from werkzeug.security import generate_password_hash, check_password_hash
+from app.security.decorators import access_token_required
 from flask_cors import cross_origin
 from app.security.tools import login_user
 from app.extensions import db
@@ -108,4 +109,10 @@ def signUp():
     except KeyError as e:
         print(e)
         return make_response(jsonify({"message": "Wrong format!"}), HTTP_406_NOT_ACCEPTABLE)
+
+
+@auth.route("/logout", methods=["POST"])
+@access_token_required(logout=True)
+def logout():
+    return make_response(jsonify({"message": "Logout successful!"}), 200)
 

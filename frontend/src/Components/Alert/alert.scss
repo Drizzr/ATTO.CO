@@ -31,12 +31,14 @@
 
       &-exit {
           position: relative;
+          display: none;
 
         }
 
       &-exit-active {
           transform: translateY(-50%);
           transition: transform 0.3s ease;
+          display: none;
       }
   
   }

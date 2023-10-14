@@ -13,7 +13,7 @@
     &_collapsed {
   
         &-enter {
-            width: 40%;
+            width: 20%;
         
         }
   
@@ -26,6 +26,29 @@
     &__header {
         padding: 0.5rem;
         height: 20%;
+    }
+
+
+    &__alert {
+        width: 100%;
+
+
+        &_container {
+            &_enter {
+                transition: width 0.3s ease;
+                width: 60%;
+                    
+            }
+    
+            &_exit {
+                transition: width 0.3s ease;
+                width: 80%;
+            }
+        
+        }
+
+
+    
     }
 }
 
