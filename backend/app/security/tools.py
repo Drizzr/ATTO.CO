@@ -1,10 +1,7 @@
-from app.models import Device, Role, ExpiredToken
-from app.utils.httpCodes import HTTP_201_CREATED, HTTP_401_UNAUTHORIZED, HTTP_404_NOT_FOUND
-from flask import request, jsonify, abort, make_response, redirect, current_app
+from flask import request, make_response, current_app
 import jwt
 from datetime import datetime, timedelta
-from ..extensions import db
-from app.models import User, Device, Role, ExpiredToken
+from app.models import User, ExpiredToken
 
 
 
@@ -83,9 +80,9 @@ def is_verified(cookie=False):
                 raise jwt.ExpiredSignatureError  # access token has been labled as expired -> refresh token has to be checked
 
         else:
-            return make_response(
-                jsonify({"message": "Woring token-scope!", "http-code": "401"}),
-                    HTTP_404_NOT_FOUND)
+            return False
 
     except jwt.ExpiredSignatureError:
         return False
+
+

@@ -1,11 +1,9 @@
-from flask import redirect, make_response, g, request, jsonify, current_app
+from flask import  make_response, g, request, jsonify, current_app, request
 from app.models import User, ExpiredToken, Role
 from app.utils.httpCodes import HTTP_401_UNAUTHORIZED, HTTP_404_NOT_FOUND
 from app.extensions import db
 from functools import wraps
 import jwt
-from app.security.tools import createJwtToken
-#from app.utils.analytics import trackUserApiCalls
 
 
 class access_token_required(object):
@@ -132,6 +130,4 @@ class access_token_required(object):
                                      HTTP_401_UNAUTHORIZED)
 
         return decorator
-
-
 

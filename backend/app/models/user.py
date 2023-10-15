@@ -9,6 +9,9 @@ class User(db.Model):
     email = db.Column(db.String(50))
     urls = db.relationship('ShortenedURL', backref='user', lazy=True)
     roles = db.relationship('Role', secondary=userRoleLink)
+    calls = db.relationship('UrlCall', backref='user', lazy=True)
+
+    expired_tokens = db.relationship('ExpiredToken', backref='user', lazy=True)
 
 
 class ExpiredToken(db.Model):
