@@ -2,21 +2,21 @@ from app.extensions import db
 from app.models.user_role_link import userRoleLink
 
 class User(db.Model):
+    __name__ = "user"
     id = db.Column(db.Integer, primary_key=True)
     public_id = db.Column(db.String(50), unique=True)
     username = db.Column(db.String(50))
     password = db.Column(db.String(50))
     email = db.Column(db.String(50))
-    urls = db.relationship('ShortenedURL', backref='user', lazy=True)
     roles = db.relationship('Role', secondary=userRoleLink)
-    calls = db.relationship('UrlCall', backref='user', lazy=True)
 
     expired_tokens = db.relationship('ExpiredToken', backref='user', lazy=True)
+    urls = db.relationship('URL', backref='user', lazy=True)
+    calls = db.relationship('UrlCall', backref='user', lazy=True)
 
 
 class ExpiredToken(db.Model):
 
-    __name__ = "expired_token"
 
     id : int = db.Column(db.Integer, primary_key=True)
     user_id : int = db.Column(db.Integer, db.ForeignKey("user.id", ondelete='CASCADE')) 

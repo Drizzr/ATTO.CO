@@ -95,9 +95,9 @@ class MyAdminIndexView(AdminIndexView):
 class UserView(ModelView):
     #inline_models = ['post', ]
 
-    column_list = ["public_id", "email", "roles", "expired_tokens", "password"]
+    column_list = ["public_id", "email", "expired_tokens", "password"]
     form_columns = ["email", "password"]
-    column_searchable_list = ['public_id', "roles", 'email']
+    column_searchable_list = ['public_id', 'email']
     roles_can_edit = ["Admin", "Admin-Editor"]
     column_editable_list = ["email"]
     

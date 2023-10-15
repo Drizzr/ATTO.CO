@@ -1,5 +1,5 @@
-from .urls import ShortenedURL
+from .urls import URL
 from .user import User, ExpiredToken
 from .role import Role
 from .device import Device
-from .urlCall import UrlCall
+from .urlCall import UrlCall, DailyUrlCall

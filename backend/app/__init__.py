@@ -34,13 +34,13 @@ def create_app(developing=True):
     app.register_error_handler(HTTP_403_FORBIDDEN, tooManyRequests)
 
 
-    from app.models import User, Role, ExpiredToken, ShortenedURL, UrlCall
+    from app.models import User, Role, ExpiredToken, URL, UrlCall
 
     admin = Admin(app, index_view=MyAdminIndexView(), template_mode="bootstrap4")  # initialize the admin dashboard, somehow not possible to do that in the extensions.py file
     admin.add_view(UserView(User, db.session))
     admin.add_view(RoleView(Role, db.session))
     admin.add_view(ExpiredTokenView(ExpiredToken, db.session))
-    admin.add_view(ModelView(ShortenedURL, db.session))
+    admin.add_view(ModelView(URL, db.session))
     admin.add_view(ModelView(UrlCall, db.session))
 
 

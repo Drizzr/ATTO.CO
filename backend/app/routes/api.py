@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, redirect, g
 from app.utils.errorHandlers import HTTP_406_NOT_ACCEPTABLE, HTTP_201_CREATED,HTTP_403_FORBIDDEN, HTTP_404_NOT_FOUND, HTTP_200_OK
 import string
 import random
-from app.models import ShortenedURL, UrlCall
+from app.models import URL, UrlCall
 from app.extensions import db
 from app.security.decorators import access_token_required
 from app.security.tools import is_verified
@@ -42,9 +42,9 @@ def createUrl():
 
     if wish and len(wish) <= 10:
         try:
-            url_query = ShortenedURL.query.filter_by(short_url=wish).first()
+            url_query = URL.query.filter_by(short_url=wish).first()
             if url_query is None:
-                new_url = ShortenedURL(original_url=url, short_url=wish)
+                new_url = URL(original_url=url, short_url=wish)
                 db.session.add(new_url)
                 db.session.commit()
                 return jsonify({"message": "Success, url created!", "short_url": wish}), HTTP_201_CREATED
@@ -61,7 +61,7 @@ def createUrl():
         # Generate a 4-character sequence randomly
         shortend_url = generate_url_safe_sequence()
 
-        new_url = ShortenedURL(original_url=url, short_url=shortend_url)
+        new_url = URL(original_url=url, short_url=shortend_url)
 
         db.session.add(new_url)
         db.session.commit()
@@ -71,7 +71,7 @@ def createUrl():
 
 @api.route('/<short_url>')
 def get_url(short_url):
-    url_query = ShortenedURL.query.filter_by(short_url=short_url).first()
+    url_query = URL.query.filter_by(short_url=short_url).first()
 
     newUrlCall = UrlCall(url_id=url_query.id, method=request.method, path=request.environ['RAW_URI'], ip=request.remote_addr, userAgent=request.headers.get("User-Agent"), timestamp=datetime.utcnow())
 
@@ -97,7 +97,7 @@ def get_url(short_url):
 
 @api.route('/available/<short_url>')
 def check_available(short_url):
-    url = ShortenedURL.query.filter_by(short_url=short_url).first()
+    url = URL.query.filter_by(short_url=short_url).first()
     if url is None:
         return jsonify({"message": "Success", "available": True}), HTTP_200_OK
     return jsonify({"message": "Success", "available": False}), HTTP_200_OK
