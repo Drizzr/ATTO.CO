@@ -1,0 +1,1 @@
+![ATTO.CO](frontend/src/assets/images/logo.png)
