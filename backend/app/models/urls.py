@@ -11,5 +11,4 @@ class URL(db.Model):
     secured = db.Column(db.Boolean, default=False)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    calls = db.relationship('UrlCall', backref='shortened_url', lazy=True)
-    daily_stats = db.relationship('DailyUrlCall', backref='url_call', lazy=True)
+    loggs = db.relationship('Log', backref='shortened_url', lazy=True)

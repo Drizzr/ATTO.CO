@@ -22,7 +22,7 @@ class access_token_required(object):
             try:
                 # trying to load access and refresh tokens out of the request's http-header
 
-                refreshToken = request.cookies.get("x_refresh_token")
+                #refreshToken = request.cookies.get("x_refresh_token")
 
                 if self.cookie:
                     accessToken = request.cookies["x_access_token"]
@@ -32,6 +32,7 @@ class access_token_required(object):
                 print(accessToken, refreshToken)
                 
             except KeyError as e:
+                print(request.headers)
                 # on of the two tokens cant be found in the request header
                 return make_response(jsonify({"message": "Api-key is missing!", "http-code": "401"}),
                                      HTTP_401_UNAUTHORIZED)
@@ -55,6 +56,8 @@ class access_token_required(object):
                             # this function tracks the amount of tokens created per day and increases the api_calls counter
                             #trackUserApiCalls(current_user)
                             g.user_id = current_user.id
+                            g.device_query.user_id = current_user.id
+                            g.new_log.user_id = current_user.id
 
 
                             if self.logout:  # checks whether the current user needs to be logged out
@@ -106,6 +109,8 @@ class access_token_required(object):
                             for role in self.roles:
                                 role_query = Role.query.filter_by(name=role).first()
                                 if role_query in current_user.roles:
+
+                                    
                                     return function(current_user, *args, **kwargs)  # route function gets called
                             
                             return make_response(jsonify({"message": "Token is invalid!", "http-code": "401"}),

@@ -1,5 +1,7 @@
 from app.extensions import db
 from app.models.user_role_link import userRoleLink
+from app.models.device_user_link import deviceUserLink
+from .role import Role
 
 class User(db.Model):
     __name__ = "user"
@@ -12,7 +14,11 @@ class User(db.Model):
 
     expired_tokens = db.relationship('ExpiredToken', backref='user', lazy=True)
     urls = db.relationship('URL', backref='user', lazy=True)
-    calls = db.relationship('UrlCall', backref='user', lazy=True)
+    devices = db.relationship('Device', secondary=deviceUserLink, backref='user', lazy=True)
+    loggs = db.relationship('Log', backref='user', lazy=True)
+
+    def set_role(self, role):
+        self.roles.append(Role.query.filter_by(name=role).first())
 
 
 class ExpiredToken(db.Model):

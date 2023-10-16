@@ -3,18 +3,20 @@ import Button from '../Button/Button';
 import Alert from '../Alert/Alert';
 import { faExclamationCircle, faClipboardList  } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from '../../api/axios';
+import axiosWithAuth from "../../api/axios";
 import "./index.css"
 import "../../index.css"
 import "../../Components/Alert/alert.css"
 import ReactCardFlip from 'react-card-flip';
 import { Link } from 'react-router-dom';
-
+import useAuth from '../../hooks/useAuth';
 
 const url_regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 
 
 function CreateUrlForm() {
+
+    const {auth, setAuth} = useAuth();
 
     const errRef1 = useRef(null);
     const errRef2 = useRef(null);
@@ -61,7 +63,7 @@ function CreateUrlForm() {
         }
 
         try {
-            const response = await axios.post("/create-url/", { url: URL , urlWish: wish});
+            const response = await axiosWithAuth.post("/create-url/", { url: URL , urlWish: wish, }, { headers: { x_access_token:  auth?.access_token}});
 
             setShortend(response?.data?.short_url);
             

@@ -13,7 +13,8 @@ class Device(db.Model):
     calls_all_time : int = db.Column(db.Integer)
     last_call : str = db.Column(db.String(50))
     flagged : bool = db.Column(db.Boolean)
-    
+
+    loggs = db.relationship('Log', backref='device', lazy=True)
 
     def __repr__(self):
         return f'<Device {self.ip}>'
